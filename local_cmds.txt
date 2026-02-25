@@ -1,0 +1,10 @@
+//create env & activate
+python -m venv venv
+
+//make req file standard
+//install req
+pip install -r requirements.txt
+
+//updated versions in req file
+
+//define my code structure
