@@ -1,5 +1,5 @@
 import csv
-from typing import Tuple, List, Dict, Optional
+from typing import Tuple, List, Dict
 
 def analyze_csv_stream(path: str, delimiter=";") -> Tuple[int, int]:
     """Return number of rows and columns in a CSV file."""
