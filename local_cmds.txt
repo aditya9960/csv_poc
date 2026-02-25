@@ -8,3 +8,6 @@ pip install -r requirements.txt
 //updated versions in req file
 
 //define my code structure
+dockerfile, docker-compose, app, app/core for config, main.py
+
+//setup standard config
