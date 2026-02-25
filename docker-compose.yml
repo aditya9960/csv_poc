@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - data:/data/files
+    depends_on:
+      - db
+      - redis
+
+  worker:
+    build: .
+    command: sh -c "cd /app && celery -A app.workers.tasks.celery_app worker --loglevel=info"
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - data:/data/files
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: files
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+volumes:
+  data:
