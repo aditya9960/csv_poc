@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     redis_url: str = "redis://redis:6379/0"
     storage_path: str = "/data/files"
     default_page_size: int = 20
+    log_level: str = "INFO"
 
     class Config:
         env_file = ".env"
