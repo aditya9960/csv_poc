@@ -16,3 +16,7 @@ pip install -r requirements.txt
 //app/models , app/schemas
 
 //defining routes with versions
+
+//docker compose
+//docker compose build --no-cache
+docker compose up

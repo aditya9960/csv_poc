@@ -14,9 +14,11 @@ router = APIRouter()
 # setting global
 storage = LocalStorage()
 
-@router.get("")
-def hello():
-    return {"Hello": "World"}
+# TODO logger
+
+# @router.get("")
+# def hello():
+#     return {"Hello": "World"}
 
 
 @router.get("/files", response_model=list[FileResponse])
