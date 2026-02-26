@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     storage_path: str = "/data/files"
     default_page_size: int = 20
     log_level: str = "INFO"
+    running_tests: str = "0"
 
     class Config:
         env_file = ".env"
