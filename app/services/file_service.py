@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.models.files import FileMetadata
 from app.utils.csv_utils import analyze_csv_stream
 
-def create_file_record(db: Session, file_id: str, filename: str, path: str):
+def create_file_record(db: Session, file_id: str, filename: str, path: str, checksum: str):
     """
     Service for file db record
     Args:
@@ -17,7 +17,7 @@ def create_file_record(db: Session, file_id: str, filename: str, path: str):
 
     """
     try:
-        record = FileMetadata(id=file_id, filename=filename, path=path, status="uploaded")
+        record = FileMetadata(id=file_id, filename=filename, path=path, status="uploaded", checksum=checksum)
         db.add(record)
         db.commit()
         db.refresh(record)

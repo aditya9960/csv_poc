@@ -1,4 +1,5 @@
 import uuid
+import os
 from fastapi import APIRouter, Depends, Query, UploadFile, HTTPException
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -61,9 +62,18 @@ async def upload_file(file: UploadFile, db: Session = Depends(get_db)):
             raise HTTPException(400, "Only CSV allowed")
 
         file_id = str(uuid.uuid4())
-        path = await storage.save_file(file_id, file)
-        create_file_record(db, file_id, file.filename, path)
+        path, checksum = await storage.save_file(file_id, file)
+        logger.info("upload_files_api: File already exists", extra={"file": file.filename, "checksum": checksum})
+        file_exist = db.query(FileMetadata).filter(FileMetadata.checksum == checksum,
+                                                   FileMetadata.status == 'ready').first()
+        if file_exist:
+            os.remove(path)  # remove temp upload
+            raise HTTPException(409, "File already exists")
+
+        create_file_record(db, file_id, file.filename, path, checksum)
         process_file.delay(file_id)
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error("upload_files_api: %s", e, exc_info=True)
         raise Exception("File Upload failed !")
