@@ -12,6 +12,7 @@ class FileMetadata(Base):
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     filename = Column(String, nullable=False)
     path = Column(String, nullable=False)
+    checksum = Column(String, index=True, nullable=False) # for file uniqeness
     size = Column(Integer, default=0)
     rows = Column(Integer, default=0)
     columns = Column(Integer, default=0)
